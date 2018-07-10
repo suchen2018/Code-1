@@ -1,0 +1,38 @@
+from math import pow
+
+class Repayment():
+    def __init__(self, amount=300, year=30, rate=4.9, floating=1.1):
+        self._amount=amount*1E4
+        self._year=year
+        self._rate=rate*floating/100/12
+        
+    def ACPI(self):
+        print('等额本息还款')
+        r=self._rate+1
+        a=pow(r,30*12)
+        c=self._amount*(1-r)*a/(1-a)
+        print('每月还款 %.2f' %c)
+        sum_0=c*12*30-self._amount
+        print('总支付利息 %.2f' %sum_0)
+        print()
+        
+    def AC(self):
+        print('等额本金还款')
+        c=self._amount/30/12
+        i=self._amount*self._rate
+        print('首月还款 %.2f' %(c+i))
+        print('每月递减 %.2f' %(c*self._rate))
+        
+        sum_0=0
+        amount=self._amount
+        for j in range(30*12):
+            sum_0+=amount*self._rate
+            amount-=c
+        print('总支付利息 %.2f' %sum_0)
+        print()
+            
+
+if __name__=='__main__':
+    person1=Repayment()
+    person1.ACPI()
+    person1.AC()
